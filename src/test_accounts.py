@@ -10,7 +10,7 @@ def new_account(operations: list[Operation]) -> Account:
     return Account(name="", operations=operations)
 
 
-def test_balance():
+def test_balance() -> None:
     expence_operation = Operation.new_income(Amount.new(Decimal("100.00")))
     income_operation = Operation.new_expence(Amount.new(Decimal("50.50")))
     account = new_account(operations=[income_operation, expence_operation])
@@ -18,7 +18,7 @@ def test_balance():
     assert account.balance() == Decimal("49.50")
 
 
-def test_operation():
+def test_operation() -> None:
     account = new_account(operations=[])
     account.add_operation(Operation.new_income(Amount.new(Decimal("100.00"))))
     account.add_operation(Operation.new_expence(Amount.new(Decimal("50.50"))))
@@ -26,7 +26,7 @@ def test_operation():
     assert account.balance() == Decimal("49.50")
 
 
-def test_transfer():
+def test_transfer() -> None:
     account = new_account(operations=[])
     second_account = new_account(operations=[])
     account.send_transfer(second_account, Amount(value=Decimal("10.50")))
@@ -39,7 +39,7 @@ def test_transfer():
 
 
 class TestGetOperationsByTag:
-    def test_has_operations(self):
+    def test_has_operations(self) -> None:
         tag = Tag(name="Shopping")
         operation = Operation.new_expence(
             Amount.new(Decimal("50.50")), tags=[tag]
@@ -51,7 +51,7 @@ class TestGetOperationsByTag:
 
         assert tag in found_operations[0].tags
 
-    def test_no_match(self):
+    def test_no_match(self) -> None:
         account = new_account(
             operations=[
                 Operation.new_expence(

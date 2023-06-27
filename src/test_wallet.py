@@ -2,7 +2,7 @@ from accounts import Account
 from wallet import Wallet
 
 
-def test_get_account_by_name():
+def test_get_account_by_name() -> None:
     account_1_name = "Card Account"
     account_1 = Account(name=account_1_name)
     wallet = Wallet(accounts=[account_1])
