@@ -1,0 +1,17 @@
+{
+    "python.linting.mypyEnabled": true,
+    "python.linting.flake8Enabled": true,
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.autoImportCompletions": true,
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+}
