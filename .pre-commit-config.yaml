@@ -7,6 +7,12 @@ repos:
         language: system
   - repo: local
     hooks:
+      - id: mypy
+        name: mypy
+        entry: bash -c 'poetry run mypy src'
+        language: system
+  - repo: local
+    hooks:
       - id: pytest
         name: pytest
         entry: bash -c 'poetry run pytest'
