@@ -15,7 +15,7 @@ class TypeEnum(enum.Enum):
 
 
 class Type(ABC, BaseModel):
-    enum_val: TypeEnum
+    enum: TypeEnum
 
     @abstractmethod
     def apply_shift(self, amount: Amount) -> Decimal:
@@ -23,14 +23,14 @@ class Type(ABC, BaseModel):
 
 
 class IncomeType(Type):
-    enum_val: Literal[TypeEnum.INCOME] = TypeEnum.INCOME
+    enum: Literal[TypeEnum.INCOME] = TypeEnum.INCOME
 
     def apply_shift(self, amount: Amount) -> Decimal:
         return amount.value
 
 
 class ExpenceType(Type):
-    enum_val: Literal[TypeEnum.EXPENCE] = TypeEnum.EXPENCE
+    enum: Literal[TypeEnum.EXPENCE] = TypeEnum.EXPENCE
 
     def apply_shift(self, amount: Amount) -> Decimal:
         return amount.negated()
