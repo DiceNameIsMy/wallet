@@ -1,8 +1,11 @@
-from typing import Optional
+from collections import defaultdict
+from decimal import Decimal
+from typing import DefaultDict, Optional
 
 from accounts import Account
 from base import BaseModel
 from operations.amount import Amount
+from operations.currencies import Currency
 from operations.operations import Operation
 from operations.tags import Tag
 
@@ -53,6 +56,12 @@ class Wallet:
 
     def get_transfers(self) -> list[Transfer]:
         return self.transfers
+
+    def balance(self) -> dict[Currency, Decimal]:
+        balance: DefaultDict[Currency, Decimal] = defaultdict(Decimal)
+        for account in self.accounts:
+            balance[account.currency] += account.balance()
+        return dict(balance)
 
     def send_transfer(
         self,

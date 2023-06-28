@@ -5,6 +5,7 @@ import pytest
 from accounts import Account
 from operations.amount import Amount
 from operations.currencies import Currency
+from operations.operations import Operation
 from operations.tags import Tag
 from wallet import AccountNamesNotUnique, Wallet
 
@@ -26,6 +27,31 @@ class TestInitialization:
 def test_get_account_by_name(wallet: Wallet, account: Account) -> None:
     assert wallet.get_account_by_name("invalid_account_name") is None
     assert wallet.get_account_by_name(account.name) is not None
+
+
+class TestBalance:
+    def test_combined_accounts_balance(
+        self,
+        wallet: Wallet,
+        account: Account,
+        second_account: Account,
+    ) -> None:
+        account.add_operation(
+            Operation.new_income(Amount.new(Decimal("100.50")))
+        )
+        second_account.add_operation(
+            Operation.new_income(Amount.new(Decimal("10.50")))
+        )
+        balance = wallet.balance()
+        assert balance[account.currency] == Decimal("111.00")
+
+    def test_no_currency_operations(self, wallet: Wallet) -> None:
+        balance = wallet.balance()
+        assert balance[Currency.USD] == Decimal("0.00")
+
+    def test_no_account_for_currency(self, wallet: Wallet) -> None:
+        balance = wallet.balance()
+        assert balance.get(Currency.CZK, None) is None
 
 
 class TestTransfer:

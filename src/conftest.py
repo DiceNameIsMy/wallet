@@ -11,6 +11,9 @@ def wallet(
     second_account: Account,
     different_currency_account: Account,
 ) -> Wallet:
+    """
+    Wallet account with 2 USD and 1 EUR accounts
+    """
     return Wallet(
         accounts=[account, second_account, different_currency_account]
     )
