@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from decimal import Decimal
-from typing import Optional
+from typing import Optional, Self
 
 from pydantic import Field
 
@@ -18,13 +18,13 @@ class Operation(BaseModel):
     @classmethod
     def new_income(
         cls, amount: Amount, tags: Optional[list[Tag]] = None
-    ) -> Operation:
+    ) -> Self:
         return cls(type=IncomeType(), amount=amount, tags=tags or [])
 
     @classmethod
     def new_expence(
         cls, amount: Amount, tags: Optional[list[Tag]] = None
-    ) -> Operation:
+    ) -> Self:
         return cls(type=ExpenceType(), amount=amount, tags=tags or [])
 
     def shift(self) -> Decimal:
