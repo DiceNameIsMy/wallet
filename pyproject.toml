@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 pydantic = {extras = ["dotenv"], version = "^1.10.9"}
+python-telegram-bot = "^20.3"
 
 
 [tool.poetry.group.dev.dependencies]
