@@ -1,9 +1,26 @@
 from decimal import Decimal
 
+import pytest
+
 from accounts import Account
 from operations.amount import Amount
+from operations.currencies import Currency
 from operations.tags import Tag
-from wallet import Wallet
+from wallet import AccountNamesNotUnique, Wallet
+
+
+def test_valid_initialization() -> None:
+    account_1 = Account(name="account_name_1", currency=Currency.USD)
+    account_2 = Account(name="account_name_2", currency=Currency.USD)
+
+    Wallet(accounts=[account_1, account_2])
+
+
+def test_initialize_with_same_account_names() -> None:
+    account_1 = Account(name="same_name", currency=Currency.USD)
+    account_2 = Account(name="same_name", currency=Currency.USD)
+    with pytest.raises(AccountNamesNotUnique):
+        Wallet(accounts=[account_1, account_2])
 
 
 def test_get_account_by_name(wallet: Wallet, account: Account) -> None:

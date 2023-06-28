@@ -14,9 +14,22 @@ class Transfer(BaseModel):
     receiver_amount: Amount
 
 
+class AccountNamesNotUnique(Exception):
+    pass
+
+
+class WalletValidator:
+    def validate_accounts_names_unique(self, accounts: list[Account]) -> None:
+        accounts_names = list(map(lambda a: a.name, accounts))
+        unique_accounts_names = set(accounts_names)
+        if len(accounts_names) != len(unique_accounts_names):
+            raise AccountNamesNotUnique()
+
+
 class Wallet:
     accounts: list[Account]
     transfers: list[Transfer]
+    _validators = WalletValidator()
 
     def __init__(
         self,
@@ -26,6 +39,8 @@ class Wallet:
     ) -> None:
         self.accounts = accounts or []
         self.transfers = transfers or []
+
+        self._validators.validate_accounts_names_unique(self.accounts)
 
     def get_account_by_name(self, name: str) -> Optional[Account]:
         for account in self.accounts:
