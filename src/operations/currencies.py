@@ -6,3 +6,7 @@ class Currency(enum.Enum):
     EUR = "EUR"
     CZK = "CZK"
     KZT = "KZT"
+
+    @property
+    def abbreviation(self) -> str:
+        return self.value
