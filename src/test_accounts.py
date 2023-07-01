@@ -7,16 +7,26 @@ from operations.tags import Tag
 from operations.types import Amount
 
 
-def test_balance(account: Account) -> None:
-    expence_operation = Operation.new_income(Amount.new(Decimal("100.00")))
-    income_operation = Operation.new_expence(Amount.new(Decimal("50.50")))
-    account = Account(
-        name="",
-        currency=Currency.USD,
-        operations=[income_operation, expence_operation],
-    )
+class TestBalance:
+    def test_empty(self, account: Account) -> None:
+        account = Account(
+            name="",
+            currency=Currency.USD,
+            operations=[],
+        )
 
-    assert account.balance() == Decimal("49.50")
+        assert account.balance() == Decimal("0.00")
+
+    def test_with_operations(self, account: Account) -> None:
+        expence_operation = Operation.new_income(Amount.new(Decimal("100.00")))
+        income_operation = Operation.new_expence(Amount.new(Decimal("50.50")))
+        account = Account(
+            name="",
+            currency=Currency.USD,
+            operations=[income_operation, expence_operation],
+        )
+
+        assert account.balance() == Decimal("49.50")
 
 
 def test_operation(account: Account) -> None:

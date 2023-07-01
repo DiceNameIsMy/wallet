@@ -13,7 +13,7 @@ from operations.types import Amount, ExpenceType, IncomeType, Type
 class Operation(BaseModel):
     type: Type
     amount: Amount
-    tags: list[Tag] = Field(default=list)
+    tags: list[Tag] = Field(default_factory=list)
 
     @classmethod
     def new_income(

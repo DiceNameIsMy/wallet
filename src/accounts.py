@@ -13,7 +13,7 @@ from operations.tags import Tag
 class Account(BaseModel):
     name: str
     currency: Currency
-    operations: list[Operation] = Field(default=list)
+    operations: list[Operation] = Field(default_factory=list)
 
     def add_operation(self, operation: Operation) -> None:
         self.operations.append(operation)
